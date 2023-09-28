@@ -1,0 +1,12 @@
+<div class="centered-content">
+    <div class="modal-box">
+        <h1 class="modal-title has-text-primary">
+            Create New Recipe
+        </h1>
+        <input #newListValue class="input is-normal has-background-light mt-auto" type="text" placeholder="Enter new recipe..." [(ngModel)] = 'newRecipeTitle'>
+        <div class="buttons is-right mt-auto">
+            <button class="button is-responsive is-normal is-danger" routerLink="/">Cancel</button>
+            <button *ngIf="newRecipeTitle" class="button is-responsive is-normal is-primary" (click) = "createNewList(newListValue.value)">Create</button>
+          </div>
+    </div>
+</div>

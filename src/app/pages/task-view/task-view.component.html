@@ -1,0 +1,66 @@
+<div class="centered-content">
+    <div class="task-manager-container">
+        <div class="sidebar has-background-white">
+            <h1 class="title has-text-primary">
+                Recipe
+            </h1>
+            <div class="list-menu">
+                <a class="list-menu-items" *ngFor="let list of allLists" [routerLink]="['/lists',list._id]" routerLinkActive="is-active">
+                    <p>{{ list.title }}</p>
+                </a>
+            </div>
+            <button class="button is-primary has-text-white" routerLink="/newList">+ New Recipe</button>
+        </div>
+        <div class="task-list-container has-background-light">
+            <div class="tasks-head">
+                <h1 class="title has-text-primary">
+                    Steps
+                </h1>
+                <div class="sideButtons">
+                    <button *ngIf="(is_all_complete && allListTask?.length !== 0) && current_list_id" class="button is-primary is-small resetButton mr-2" (click)="resetAll()">
+                        <span><i class="fas fa-redo"></i></span>         
+                    </button>
+                    <div *ngIf="current_list_id" class="dropdown is-hoverable is-up is-pulled-right">
+                        <div class="dropdown-trigger">
+                          <button class="button is-small has-background-light taskSetting" aria-haspopup="true" aria-controls="dropdown-menu4">
+                            <span class="icon">
+                              <i class="fas fa-ellipsis-h" aria-hidden="true"></i>
+                            </span>
+                          </button>
+                        </div>
+                        <div class="dropdown-menu" id="dropdown-menu4" role="menu">
+                          <div class="dropdown-content">
+                            <div class="dropdown-item">
+                                <a class="dropdown-item"(click)="deleteList()">
+                                    Delete Recipe <i class="fas fa-utensils"></i>
+                                </a>
+                                <a *ngIf="allListTask?.length !== 0" class="dropdown-item">
+                                    Delete Steps <i class="fas fa-tasks"></i>
+                                </a>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            </div>            
+            <div class="tasks-menu">       
+                <a class="task-menu-item" *ngFor="let taskList of allListTask" (click)="toggleStepCompleted(taskList)" [ngClass]="{'is-complete':taskList.is_completed}">
+                    <div class="task-menu-text" [ngClass]="{'is-complete':taskList.is_completed}">
+                        <p>{{ taskList.title }}</p>
+                    </div>
+                    <div class="task-item-butons" [ngClass]="{'is-complete':taskList.is_completed}">
+                        <button class="button is-primary is-small" [routerLink]="['./task',taskList._id]"><i class="fas fa-pen"></i></button>
+                        <button class="button is-danger is-small" (click)="deleteListTask(taskList,$event)"><i class="fas fa-trash-alt"></i></button>                        
+                    </div>                    
+                </a>
+                <div class="noListSelected" *ngIf="!current_list_id">
+                    <span><i class="fas fa-hand-point-left"></i> Please select one recipe.</span>
+                </div>
+                <div class="noListSelected" *ngIf="current_list_id && allListTask?.length == 0">
+                    <span><i class="far fa-sad-cry"></i> Hungry!! How to make it.</span>
+                </div>
+            </div>
+            <button *ngIf="current_list_id" class="circle-new-task is-primary button has-text-white" routerLink="./task">+</button>
+        </div>       
+    </div>
+</div>
